@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "395354254911",
+    "firebase_url": "https://restsvr.firebaseio.com",
+    "project_id": "restsvr",
+    "storage_bucket": "restsvr.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:395354254911:android:ef1ec357aa9fecd998528a",
+        "android_client_info": {
+          "package_name": "com.example.firebase_demo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "395354254911-i9rj7kjuihrerg1se4l6isml044f8v93.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.firebase_demo",
+            "certificate_hash": "c9d8b493946a8d4b172567f1337ff280c2e524d0"
+          }
+        },
+        {
+          "client_id": "395354254911-s35sie5ucs1r1ce5675i1vij3p6hjqce.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBGRpI-UNePKHmdY2TgB25AbUTz3wo0uoY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "395354254911-s35sie5ucs1r1ce5675i1vij3p6hjqce.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

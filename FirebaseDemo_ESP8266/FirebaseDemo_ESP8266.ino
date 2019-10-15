@@ -29,15 +29,14 @@ void setup()
     
     Firebase.begin(FIREBASE_HOST, FIREBASE_AUTH);
 
-    Firebase.set("BOX_STATUS","!1234?$3456@");  
+    Firebase.set("BOX_STATUS",0);  
 }
 
 String nx = "";
 
 void loop() 
-{
-    
-     // GET value  
+{  
+  // GET value  
   nx=Firebase.getString("BOX_STATUS");  
   Serial.println(nx);    
 }

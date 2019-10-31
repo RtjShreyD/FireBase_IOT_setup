@@ -1,16 +1,19 @@
+#include "FirebaseESP8266.h"
 #include <ESP8266WiFi.h>
-#include <FirebaseArduino.h>
 #include <string.h>
 #include <stdlib.h>
 
-#define FIREBASE_HOST "restsvr.firebaseio.com" //firebase end point
-#define FIREBASE_AUTH "DAyn8zLBXmBecOYEZue81VirzEd3upyRukT23ghG" //secret key for authentication
+//#define FIREBASE_HOST "restsvr.firebaseio.com" //firebase end point
+//#define FIREBASE_AUTH "DAyn8zLBXmBecOYEZue81VirzEd3upyRukT23ghG" //secret key for authentication
 
-#define WIFI_SSID "Tech_D3882400"  
-#define WIFI_PASSWORD "TAQAHYWG"
+#define FIREBASE_HOST "https://trondev-bf192.firebaseio.com" 
+#define FIREBASE_AUTH "LptG0b3wMUa1Wr2mmP7ThssGIjJsG2Pius8GsHDl"  //tron-dev account
 
-//#define WIFI_SSID "Morphedo -2.4GHz"
-//#define WIFI_PASSWORD "82$morph"
+//#define WIFI_SSID "Tech_D3882400"  
+//#define WIFI_PASSWORD "TAQAHYWG"
+
+#define WIFI_SSID "Morphedo -2.4GHz"
+#define WIFI_PASSWORD "82$morph"
 
 //Global Variables block//
 char sub_str[15], box_id[5], odr_id[5], charBuf[10];
@@ -24,50 +27,85 @@ void str_slice(char string[], int pos, int len)  //to slice a string from in bet
   int c = 0;
   while (c < len) 
   {
-      sub_str[c] = string[pos+c-1];
-      c++;
+      sub_str[c] = string[pos+c-1]; 
+      c++; 
     }
    sub_str[c] = '\0';
 }
 //*******Custom functions block end********//
 
+FirebaseData firebaseData;
 
 void setup() 
 {
     Serial.begin(9600);
-    // connect to wifi.
+    Serial.println();
+    Serial.println();
+
     WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
-    Serial.print("connecting");
-    
-    while (WiFi.status() != WL_CONNECTED) 
+    Serial.print("Connecting to Wi-Fi");
+    while (WiFi.status() != WL_CONNECTED)
     {
         Serial.print(".");
-        delay(500);
+        delay(300);
+    }
+    Serial.println();
+    Serial.print("Connected with IP: ");
+    Serial.println(WiFi.localIP());
+    Serial.println();
+
+    Firebase.begin(FIREBASE_HOST, FIREBASE_AUTH);
+    Firebase.reconnectWiFi(true);
+
+    String path = "/boxes/Y3FRSKfkVcYAPygUD9cUP2762HY2";
+
+    String jsonData = "";
+    
+
+    Serial.println("------------------------------------");
+    Serial.println("Get JSON test...");
+
+    if (Firebase.getString(firebaseData, path))
+    {
+        Serial.println("PASSED");
+        Serial.println("PATH: " + firebaseData.dataPath());
+        Serial.println("TYPE: " + firebaseData.dataType());
+        //Serial.print("VALUE: ");
+        if (firebaseData.dataType() == "int")
+            Serial.println(firebaseData.intData());
+        else if (firebaseData.dataType() == "float")
+            Serial.println(firebaseData.floatData(), 5);
+        else if (firebaseData.dataType() == "double")
+            printf("%.9lf\n", firebaseData.doubleData());
+        else if (firebaseData.dataType() == "boolean")
+            Serial.println(firebaseData.boolData() == 1 ? "true" : "false");
+        else if (firebaseData.dataType() == "string")
+            Serial.println(firebaseData.stringData());
+        else if (firebaseData.dataType() == "json"){
+           
+           jsonData = firebaseData.jsonData(); //store for next test
+           Serial.println(firebaseData.jsonData());
+
+        }
+
+        //jsonData = firebaseData.jsonData(); //store for next test
+        //Serial.println(firebaseData.jsonData());
+        
+        Serial.println("------------------------------------");
+        Serial.println();
+    }
+    else
+    {
+        Serial.println("FAILED");
+        Serial.println("REASON: " + firebaseData.errorReason());
+        Serial.println("------------------------------------");
+        Serial.println();
     }
     
-    Serial.println();
-    Serial.print("connected: ");
-    Serial.println(WiFi.localIP());
-    
-    Firebase.begin(FIREBASE_HOST, FIREBASE_AUTH);
-
-    Firebase.set("BOX_STATUS","!101:3980:1@");  //saved 
 } 
 
-//str_slice(res_data, 12,3);  //from 12th char 3 chars
 
 void loop() 
-{  
-
-  // GET value  
-  nx=Firebase.getString("BOX_STATUS"); 
-  nx.toCharArray(charBuf, 50);
-  str_slice(charBuf, 2,4);
-  strcpy(box_id, sub_str);
-  Serial.println(box_id);  
-  delay(1000);
-  memset(sub_str,0,strlen(sub_str));
-  memset(box_id,0,strlen(box_id));
-  delay(1000);
+{ 
 
 }          

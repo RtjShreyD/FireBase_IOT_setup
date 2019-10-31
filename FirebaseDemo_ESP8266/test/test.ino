@@ -7,8 +7,9 @@
 // Set these to run example.
 #define FIREBASE_HOST "mybackendnodemcu.firebaseio.com"
 #define FIREBASE_AUTH "7K7RcmMB1ad4nK1I8rUj6AfafL2NYP0yVFHb80gR"
-#define WIFI_SSID "Tech_D3882400"
-#define WIFI_PASSWORD "TAQAHYWG"
+
+#define WIFI_SSID "Morphedo -2.4GHz"
+#define WIFI_PASSWORD "82$morph"
 
 FirebaseData firebaseData;
 
@@ -34,75 +35,10 @@ void setup()
     Firebase.begin(FIREBASE_HOST, FIREBASE_AUTH);
     Firebase.reconnectWiFi(true);
 
-    String path = "/ESP8266_Test/Json";
+    String path = "/boxes/Json";
 
     String jsonData = "";
     
-
-    FirebaseJson json;
-    FirebaseJson json2;
-    FirebaseJson json3;
-    FirebaseJson json4;
-    FirebaseJsonArray jsonArr;
-    FirebaseJsonArray jsonArr2;
-
-    json2.addString("test1","hello world").addString("test2","nice to see you");
-
-    jsonArr2.addInt(99).addBool(true).addDouble(190.24555673).addString("Firebase");
-
-
-    jsonArr.addJson(&json2).addString("welcome").addArray(&jsonArr2);
-
-    json3.addDouble("myVal",212.224).addString("myStr","good");
-
-    json4.setJsonData("{\"simpleData\":\"this is string\"}");//Manual set raw json string.
-   
-
-    json.clear().addInt("data1",100).addArray("myArray",&jsonArr).addJson("anotherData",&json3).addJson("data2",&json4);
-
-
-
-    Serial.println("------------------------------------");
-    Serial.println("JSON Data");
-    Serial.println(json.toString());
-    Serial.println("------------------------------------");
-    
-
-
-   
-    Serial.println("------------------------------------");
-    Serial.println("Set JSON test...");
-
-    if (Firebase.setJSON(firebaseData, path, json))
-    {
-        Serial.println("PASSED");
-        Serial.println("PATH: " + firebaseData.dataPath());
-        Serial.println("TYPE: " + firebaseData.dataType());
-        Serial.print("VALUE: ");
-        if (firebaseData.dataType() == "int")
-            Serial.println(firebaseData.intData());
-        else if (firebaseData.dataType() == "float")
-            Serial.println(firebaseData.floatData(), 5);
-        else if (firebaseData.dataType() == "double")
-            printf("%.9lf\n", firebaseData.doubleData());
-        else if (firebaseData.dataType() == "boolean")
-            Serial.println(firebaseData.boolData() == 1 ? "true" : "false");
-        else if (firebaseData.dataType() == "string")
-            Serial.println(firebaseData.stringData());
-        else if (firebaseData.dataType() == "json")
-            Serial.println(firebaseData.jsonData());
-        Serial.println("------------------------------------");
-        Serial.println();
-    }
-    else
-    {
-        Serial.println("FAILED");
-        Serial.println("REASON: " + firebaseData.errorReason());
-        Serial.println("------------------------------------");
-        Serial.println();
-    }
-
-
 
     Serial.println("------------------------------------");
     Serial.println("Get JSON test...");

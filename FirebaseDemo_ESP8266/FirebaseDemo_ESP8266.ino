@@ -59,7 +59,7 @@ void setup()
 
     String path = "/boxes/Y3FRSKfkVcYAPygUD9cUP2762HY2";
 
-    String jsonData = "";
+    String Data = "";
     
 
     Serial.println("------------------------------------");
@@ -82,14 +82,12 @@ void setup()
         else if (firebaseData.dataType() == "string")
             Serial.println(firebaseData.stringData());
         else if (firebaseData.dataType() == "json"){
-           
-           jsonData = firebaseData.jsonData(); //store for next test
            Serial.println(firebaseData.jsonData());
 
         }
 
-        //jsonData = firebaseData.jsonData(); //store for next test
-        //Serial.println(firebaseData.jsonData());
+        Data = firebaseData.stringData(); //store for next test
+        Serial.println(Data);
         
         Serial.println("------------------------------------");
         Serial.println();
